@@ -1,54 +1,39 @@
+var playercount = 0;
+var player;
 var database;
-var back_img;
-var gameState =0;
-var playerCount = 0;
-var allPlayers;
-var score =0;
-var player, form,game;
-var player1,player2;
-var players;
-var fruits;
-var fruitGroup;
-var fruit1_img, fruit2_img, fruit3_img, fruit4_img, fruit5_img;
-var player_img;
-var player1score =0;
-var player2score =0;
-
-var obstacleGroup,obstacle,obstacleImage;
-
-function preload(){
-  back_img = loadImage("images/jungle.jpg");
-  player_img = loadImage("images/basket2.png");
-  fruit1_img = loadImage("images/apple2.png");
-  fruit2_img = loadImage("images/banana2.png");
-  fruit3_img = loadImage("images/melon2.png");
-  fruit4_img = loadImage("images/orange2.png");
-  fruit5_img = loadImage("images/pineapple2.png");
-  fruitGroup = new Group();
-
-  obstacleImage = loadImage("images/mushroom.png")
-}
+var playerIndex = null;
+var gamestate = 0;
+var game;
+var wkey;
+var bkey;
+var form;
+var arr = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A"]
 function setup() {
-  createCanvas(1000, 600);
+  createCanvas(windowWidth,windowHeight);
   database = firebase.database();
+  form = new Form();
+  form.display();
+  player = new Player();
+  player.getCount();
   game = new Game();
   game.getState();
-  game.start();
+  
+}
+function preload() {
+  wkey = loadImage("wkey.png");
+  bkey = loadImage("bkey.png");
+}
+function setup() {
   
 }
 
 function draw() {
-  background(back_img);
-  
-   if (playerCount === 2) {
-     game.update(1);
-   }
-   if (gameState === 1) {
-     clear(); 
-     game.play();
-   }
-   if (gameState === 2) {
-    
-     game.end();
-   }
+  background("white");
+  if(playercount == 2){
+    game.updateState(1);
+  }
+ if(gamestate == 1){
+  game.start();
+ }
+  drawSprites();
 }
